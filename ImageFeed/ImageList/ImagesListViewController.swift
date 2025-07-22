@@ -31,7 +31,7 @@ extension ImagesListViewController: UITableViewDelegate {
         let imageInsets = UIEdgeInsets(top: 4, left: 16, bottom: 4, right: 16)
         let imageViewWidth = tableView.bounds.width - imageInsets.left - imageInsets.right
         let imageWidth = image.size.width
-        let scale = imageViewWidth / imageWidth
+        let scale = imageWidth != 0 ? imageViewWidth / imageWidth : 1.0
         let cellHeight = image.size.height * scale + imageInsets.top + imageInsets.bottom
         return cellHeight
     }
@@ -62,7 +62,6 @@ extension ImagesListViewController {
         
         cell.cellImage.image = image
         cell.dateLabel.text = dateFormatter.string(from: Date())
-
         let isLiked = indexPath.row % 2 == 0
         let likeImage = isLiked ? UIImage(named: "active_like_button") : UIImage(named: "disable_like_button")
         cell.likeButton.setImage(likeImage, for: .normal)

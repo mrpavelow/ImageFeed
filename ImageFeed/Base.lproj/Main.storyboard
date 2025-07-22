@@ -51,7 +51,7 @@
                                                     </buttonConfiguration>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="27 августа 2022" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rQX-yO-QfG" userLabel="Date Label">
-                                                    <rect key="frame" x="28.000000000000007" y="165.33333333333334" width="101.66666666666669" height="15.666666666666657"/>
+                                                    <rect key="frame" x="24.000000000000007" y="172.33333333333334" width="101.66666666666669" height="15.666666666666657"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                     <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -59,15 +59,15 @@
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
-                                                <constraint firstItem="rQX-yO-QfG" firstAttribute="leading" secondItem="rIA-Tp-UwG" secondAttribute="leadingMargin" constant="8" id="IcF-Th-faM"/>
                                                 <constraint firstItem="45T-71-CTH" firstAttribute="top" secondItem="2OY-kb-PAP" secondAttribute="top" id="Iiw-Xu-Rzv"/>
                                                 <constraint firstItem="2OY-kb-PAP" firstAttribute="leading" secondItem="rIA-Tp-UwG" secondAttribute="leading" constant="16" id="R3P-bX-NsL"/>
                                                 <constraint firstItem="45T-71-CTH" firstAttribute="trailing" secondItem="2OY-kb-PAP" secondAttribute="trailing" id="ead-jf-cAo"/>
                                                 <constraint firstAttribute="trailing" secondItem="2OY-kb-PAP" secondAttribute="trailing" constant="16" id="lp3-oM-ypr"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="rQX-yO-QfG" secondAttribute="bottom" constant="8" id="mph-4q-HGw"/>
+                                                <constraint firstItem="2OY-kb-PAP" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="rQX-yO-QfG" secondAttribute="trailing" constant="183" id="n4T-aL-hNH"/>
                                                 <constraint firstAttribute="bottom" secondItem="2OY-kb-PAP" secondAttribute="bottom" constant="4" id="nam-q8-0is"/>
                                                 <constraint firstItem="2OY-kb-PAP" firstAttribute="top" secondItem="rIA-Tp-UwG" secondAttribute="top" constant="4" id="oHJ-z2-GOa"/>
-                                                <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="rQX-yO-QfG" secondAttribute="trailing" constant="8" id="sA5-vb-UvO"/>
+                                                <constraint firstItem="rQX-yO-QfG" firstAttribute="leading" secondItem="2OY-kb-PAP" secondAttribute="leading" constant="8" id="qRO-W7-08I"/>
+                                                <constraint firstItem="rQX-yO-QfG" firstAttribute="bottom" secondItem="2OY-kb-PAP" secondAttribute="bottom" constant="-8" id="zzT-u8-eUb"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
