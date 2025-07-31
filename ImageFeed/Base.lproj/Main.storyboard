@@ -216,7 +216,7 @@
         <image name="Backward" width="24" height="24"/>
         <image name="active_like_button" width="44" height="44"/>
         <image name="sharing_button" width="51" height="50"/>
-        <image name="tab_editorial_active" width="60" height="60"/>
-        <image name="tab_profile_active" width="60" height="60"/>
+        <image name="tab_editorial_active" width="30" height="30"/>
+        <image name="tab_profile_active" width="30" height="30"/>
     </resources>
 </document>

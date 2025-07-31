@@ -1,31 +1,44 @@
 import UIKit
 
 final class ProfileViewController: UIViewController {
-    private var label: UILabel?
+
+    private let imageView = UIImageView()
+    private let nameLabel = UILabel()
+    private let hashtagLabel = UILabel()
+    private let descriptionLabel = UILabel()
+    private let profilePageView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let profilePageView = UIView()
-        profilePageView.backgroundColor = UIColor(named: "YPBlack")
+        setupProfileView()
+        setupUserPic()
+        setupNameString()
+        setupHashtagString()
+        setupDescriptionString()
+        setupLogoutButton()
+    }
+    
+    private func setupProfileView() {
+        profilePageView.backgroundColor = UIColor.ypBlack
         profilePageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(profilePageView)
         profilePageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
         profilePageView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         profilePageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         profilePageView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-        
-        let profileImage = UIImage(named: "UserPic")
-        let imageView = UIImageView(image: profileImage)
-        imageView.tintColor = .gray
+    }
+    
+    private func setupUserPic() {
+        imageView.image = UIImage(named: "UserPic")
         imageView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(imageView)
         imageView.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 16).isActive = true
         imageView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 32).isActive = true
         imageView.widthAnchor.constraint(equalToConstant: 70).isActive = true
         imageView.heightAnchor.constraint(equalToConstant: 70).isActive = true
-        
-        let nameLabel = UILabel()
+    }
+    
+    private func setupNameString() {
         nameLabel.text = "Екатерина Новикова"
         nameLabel.textColor = .white
         nameLabel.font = UIFont.boldSystemFont(ofSize: 23)
@@ -33,19 +46,19 @@ final class ProfileViewController: UIViewController {
         view.addSubview(nameLabel)
         nameLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
         nameLabel.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 8).isActive = true
-        self.label = nameLabel
-        
-        let hashtagLabel = UILabel()
+    }
+    
+    private func setupHashtagString() {
         hashtagLabel.text = "@ekaterina_nov"
-        hashtagLabel.textColor = UIColor(named: "YPGray")
+        hashtagLabel.textColor = UIColor.ypGray
         hashtagLabel.font = UIFont.systemFont(ofSize: 13)
         hashtagLabel.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(hashtagLabel)
         hashtagLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
         hashtagLabel.topAnchor.constraint(equalTo: nameLabel.bottomAnchor, constant: 8).isActive = true
-        self.label = hashtagLabel
-        
-        let descriptionLabel = UILabel()
+    }
+    
+    private func setupDescriptionString() {
         descriptionLabel.text = "Hello, World!"
         descriptionLabel.textColor = .white
         descriptionLabel.font = UIFont.systemFont(ofSize: 13)
@@ -53,12 +66,13 @@ final class ProfileViewController: UIViewController {
         view.addSubview(descriptionLabel)
         descriptionLabel.leadingAnchor.constraint(equalTo: imageView.leadingAnchor).isActive = true
         descriptionLabel.topAnchor.constraint(equalTo: hashtagLabel.bottomAnchor, constant: 8).isActive = true
-        self.label = descriptionLabel
-        
+    }
+    
+    private func setupLogoutButton() {
         let logoutButton = UIButton(
             type: .custom
         )
-        logoutButton.setImage(UIImage(named: "LogOutButton"), for: .normal,)
+        logoutButton.setImage(UIImage(named: "LogOutButton"), for: .normal)
         logoutButton.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(logoutButton)
         logoutButton.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -16).isActive = true
