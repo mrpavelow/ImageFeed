@@ -221,15 +221,18 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" image="Logo_of_Unsplash" translatesAutoresizingMaskIntoConstraints="NO" id="LyK-Tq-bnd">
-                                <rect key="frame" x="171" y="443" width="60" height="60"/>
+                                <rect key="frame" x="171" y="407" width="60" height="60"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="60" id="M1s-lx-lgf"/>
                                     <constraint firstAttribute="height" constant="60" id="eV9-Sm-kil"/>
                                 </constraints>
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="NAq-kM-SjU">
-                                <rect key="frame" x="16" y="681.66666666666663" width="370" height="34.333333333333371"/>
+                                <rect key="frame" x="16" y="702" width="370" height="48"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="48" id="wc7-fa-8w1"/>
+                                </constraints>
                                 <color key="tintColor" red="0.10196078431372549" green="0.10588235294117647" blue="0.13333333333333333" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Button"/>
                                 <buttonConfiguration key="configuration" style="plain" title="Войти">
@@ -249,10 +252,10 @@
                         <viewLayoutGuide key="safeArea" id="igH-j5-gfu"/>
                         <color key="backgroundColor" name="YPBlack"/>
                         <constraints>
-                            <constraint firstItem="igH-j5-gfu" firstAttribute="bottom" secondItem="NAq-kM-SjU" secondAttribute="bottom" constant="124" id="7sb-6H-0fY"/>
+                            <constraint firstItem="LyK-Tq-bnd" firstAttribute="centerY" secondItem="K9l-7X-4fM" secondAttribute="centerY" id="1Nt-hB-U6z"/>
+                            <constraint firstItem="igH-j5-gfu" firstAttribute="bottom" secondItem="NAq-kM-SjU" secondAttribute="bottom" constant="90" id="7sb-6H-0fY"/>
                             <constraint firstItem="igH-j5-gfu" firstAttribute="trailing" secondItem="NAq-kM-SjU" secondAttribute="trailing" constant="16" id="Cqw-aF-fRv"/>
-                            <constraint firstItem="LyK-Tq-bnd" firstAttribute="centerX" secondItem="igH-j5-gfu" secondAttribute="centerX" id="Hgz-tj-Kcd"/>
-                            <constraint firstItem="LyK-Tq-bnd" firstAttribute="centerY" secondItem="igH-j5-gfu" secondAttribute="centerY" id="Mz2-4u-AAP"/>
+                            <constraint firstItem="LyK-Tq-bnd" firstAttribute="centerX" secondItem="K9l-7X-4fM" secondAttribute="centerX" id="GJE-d5-he8"/>
                             <constraint firstItem="NAq-kM-SjU" firstAttribute="leading" secondItem="igH-j5-gfu" secondAttribute="leading" constant="16" id="bfw-eq-vhu"/>
                         </constraints>
                     </view>
@@ -278,8 +281,8 @@
                                     <wkPreferences key="preferences"/>
                                 </wkWebViewConfiguration>
                             </wkWebView>
-                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" ambiguous="YES" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0CM-bH-xZ3">
-                                <rect key="frame" x="126" y="106" width="150" height="4"/>
+                            <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="0CM-bH-xZ3">
+                                <rect key="frame" x="0.0" y="106" width="402" height="4"/>
                                 <color key="tintColor" name="YPBlack"/>
                             </progressView>
                         </subviews>
@@ -287,6 +290,8 @@
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="YPq-5F-K5E" firstAttribute="top" secondItem="ylV-XW-WcO" secondAttribute="top" id="DnO-5D-rX7"/>
+                            <constraint firstItem="ylV-XW-WcO" firstAttribute="trailing" secondItem="0CM-bH-xZ3" secondAttribute="trailing" id="F2G-V1-yw1"/>
+                            <constraint firstItem="0CM-bH-xZ3" firstAttribute="leading" secondItem="ylV-XW-WcO" secondAttribute="leading" id="LMS-ov-L67"/>
                             <constraint firstItem="YPq-5F-K5E" firstAttribute="leading" secondItem="xib-GG-UFR" secondAttribute="leadingMargin" id="fv8-1N-5dd"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YPq-5F-K5E" secondAttribute="trailing" id="hvx-gm-PpJ"/>
                             <constraint firstItem="ylV-XW-WcO" firstAttribute="top" secondItem="0CM-bH-xZ3" secondAttribute="top" id="pcC-Nz-b9j"/>

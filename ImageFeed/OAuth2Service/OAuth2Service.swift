@@ -23,6 +23,7 @@ final class OAuth2Service {
     
     private func makeOAuthTokenRequest(code: String) -> URLRequest? {
         guard let url = URL(string: "https://unsplash.com/oauth/token") else {
+            print("Ошибка: не удалось создать URL для токена")
             return nil
         }
         
@@ -42,8 +43,12 @@ final class OAuth2Service {
             .map { "\($0.key)=\($0.value.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? "")" }
             .joined(separator: "&")
         
-        request.httpBody = bodyString.data(using: .utf8)
+        guard let bodyData = bodyString.data(using: .utf8) else {
+            print("Ошибка: не удалось преобразовать тело запроса в Data")
+            return nil
+        }
         
+        request.httpBody = bodyString.data(using: .utf8)
         return request
     }
     
