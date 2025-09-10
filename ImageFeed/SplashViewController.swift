@@ -3,12 +3,12 @@ import UIKit
 final class SplashViewController: UIViewController {
 
     private let showAuthenticationScreenSegueIdentifier = "ShowAuthenticationScreen"
-    private let storage = OAuth2TokenStorage()
+    private let storage = OAuth2TokenStorage.shared
     private let profileService = ProfileService()
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        
+
         if let token = storage.token {
             fetchProfile(token: token)
         } else {
@@ -29,7 +29,6 @@ final class SplashViewController: UIViewController {
     }
 }
 
-// MARK: - Navigation
 extension SplashViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == showAuthenticationScreenSegueIdentifier {
@@ -48,23 +47,18 @@ extension SplashViewController {
     }
 }
 
-// MARK: - AuthViewControllerDelegate
 extension SplashViewController: AuthViewControllerDelegate {
-    func didAuthenticate(_ vc: AuthViewController) {
+    func didAuthenticate(_ vc: AuthViewController, token: String) {
         vc.dismiss(animated: true) { [weak self] in
             guard let self = self else { return }
-            
-            guard let token = self.storage.token else {
-                print("❌ Токен не найден после авторизации")
-                return
-            }
-            
+
+            self.storage.token = token
+
             self.fetchProfile(token: token)
         }
     }
 }
 
-// MARK: - Profile Loading
 extension SplashViewController {
     private func fetchProfile(token: String) {
         UIBlockingProgressHUD.show()
@@ -75,7 +69,6 @@ extension SplashViewController {
 
             switch result {
             case .success(let profile):
-                // Загружаем аватарку по username
                 ProfileImageService.shared.fetchProfileImageURL(username: profile.username) { imageResult in
                     switch imageResult {
                     case .success(let url):

@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		D443A9BC2E4EE39F00903AA1 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D443A9BA2E4EE39700903AA1 /* WebKit.framework */; };
+		D4742E4F2E71D6D0005D4993 /* SwiftKeychainWrapper in Frameworks */ = {isa = PBXBuildFile; productRef = D4742E4E2E71D6D0005D4993 /* SwiftKeychainWrapper */; };
 		D476131C2E68B75B004C1DA4 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = D476131B2E68B75B004C1DA4 /* Kingfisher */; };
 		D484CB322E50464000390028 /* ProgressHUD in Frameworks */ = {isa = PBXBuildFile; productRef = D484CB312E50464000390028 /* ProgressHUD */; };
 /* End PBXBuildFile section */
@@ -74,6 +75,7 @@
 			files = (
 				D476131C2E68B75B004C1DA4 /* Kingfisher in Frameworks */,
 				D443A9BC2E4EE39F00903AA1 /* WebKit.framework in Frameworks */,
+				D4742E4F2E71D6D0005D4993 /* SwiftKeychainWrapper in Frameworks */,
 				D484CB322E50464000390028 /* ProgressHUD in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -146,6 +148,7 @@
 			packageProductDependencies = (
 				D484CB312E50464000390028 /* ProgressHUD */,
 				D476131B2E68B75B004C1DA4 /* Kingfisher */,
+				D4742E4E2E71D6D0005D4993 /* SwiftKeychainWrapper */,
 			);
 			productName = ImageFeed;
 			productReference = D41E67122E2008D000B7861C /* ImageFeed.app */;
@@ -232,6 +235,7 @@
 			packageReferences = (
 				D484CB002E5044B700390028 /* XCRemoteSwiftPackageReference "ProgressHUD" */,
 				D476131A2E68B74E004C1DA4 /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				D4742E4D2E71D69D005D4993 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = D41E67132E2008D000B7861C /* Products */;
@@ -608,6 +612,14 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		D4742E4D2E71D69D005D4993 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jrendel/SwiftKeychainWrapper";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
 		D476131A2E68B74E004C1DA4 /* XCRemoteSwiftPackageReference "Kingfisher" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/onevcat/Kingfisher.git";
@@ -627,6 +639,11 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		D4742E4E2E71D6D0005D4993 /* SwiftKeychainWrapper */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D4742E4D2E71D69D005D4993 /* XCRemoteSwiftPackageReference "SwiftKeychainWrapper" */;
+			productName = SwiftKeychainWrapper;
+		};
 		D476131B2E68B75B004C1DA4 /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = D476131A2E68B74E004C1DA4 /* XCRemoteSwiftPackageReference "Kingfisher" */;

@@ -2,7 +2,7 @@ import UIKit
 import ProgressHUD
 
 protocol AuthViewControllerDelegate: AnyObject {
-    func didAuthenticate(_ vc: AuthViewController)
+    func didAuthenticate(_ vc: AuthViewController, token: String)
 }
 
 final class AuthViewController: UIViewController {
@@ -40,22 +40,22 @@ final class AuthViewController: UIViewController {
         navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         navigationItem.backBarButtonItem?.tintColor = UIColor.ypBlack
     }
+    
+    
 }
 
 extension AuthViewController: WebViewViewControllerDelegate {
     func webViewViewController(_ vc: WebViewViewController, didAuthenticateWithCode code: String) {
-        vc.dismiss(animated: true)
         UIBlockingProgressHUD.show()
-        OAuth2Service.shared.fetchOAuthToken(code: code) { [weak self] result in
-            guard let self else {return}
+        OAuth2Service.shared.fetchOAuthToken(code: code) { result in
             UIBlockingProgressHUD.dismiss()
             switch result {
             case .success(let token):
-                DispatchQueue.main.async {
-                    self.delegate?.didAuthenticate(self)
-                }
+                vc.dismiss(animated: true)
+                self.delegate?.didAuthenticate(self, token: token)
                 print("token =", token)
             case .failure(let error):
+                self.handleAuthError(error)
                 print("error", error)
             }
         }

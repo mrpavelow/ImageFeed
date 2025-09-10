@@ -75,7 +75,7 @@ struct Profile {
 final class ProfileService {
     static let shared = ProfileService()
     
-    private let tokenStorage = OAuth2TokenStorage()
+    private let tokenStorage = OAuth2TokenStorage.shared
     private var isFetching = false
     init() {}
     private(set) var profile: Profile?

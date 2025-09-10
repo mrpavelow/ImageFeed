@@ -4,7 +4,7 @@ final class ProfileImageService {
     static let shared = ProfileImageService()
     private init() {}
     
-    private let tokenStorage = OAuth2TokenStorage()
+    private let tokenStorage = OAuth2TokenStorage.shared
     private(set) var avatarURL: String?
     
     static let didChangeNotification = Notification.Name("ProfileImageProviderDidChange")
