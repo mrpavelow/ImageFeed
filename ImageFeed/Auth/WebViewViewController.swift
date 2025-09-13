@@ -16,15 +16,20 @@ final class WebViewViewController: UIViewController {
     
     weak var delegate: WebViewViewControllerDelegate?
     
+    private var webViewObservation: NSKeyValueObservation?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         loadAuthView()
         webView.navigationDelegate = self
-        webView.addObserver(
-            self,
-            forKeyPath: #keyPath(WKWebView.estimatedProgress),
-            options: .new,
-            context: nil)
+        
+        webViewObservation = webView.observe(
+            \.estimatedProgress,
+            options: [.new]
+        ) { [weak self] webView, _ in
+            self?.updateProgress()
+        }
+        
         updateProgress()
     }
     
@@ -54,7 +59,6 @@ final class WebViewViewController: UIViewController {
 
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        webView.removeObserver(self, forKeyPath: #keyPath(WKWebView.estimatedProgress), context: nil)
     }
     
     override func observeValue(
