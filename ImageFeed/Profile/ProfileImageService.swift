@@ -38,7 +38,6 @@ final class ProfileImageService {
     }
 }
 
-//MARK: DTO для ответа Unsplash
 struct UserResult: Codable {
     let profileImage: ProfileImage
 

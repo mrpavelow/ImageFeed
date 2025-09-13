@@ -1,6 +1,5 @@
 import Foundation
 
-// MARK: - DTO для Unsplash API
 struct ProfileResult: Decodable {
     let id: String
     let updatedAt: String
@@ -54,7 +53,6 @@ struct ProfileResult: Decodable {
     }
 }
 
-// MARK: - UI модель
 struct Profile {
     let username: String
     let name: String
@@ -71,7 +69,6 @@ struct Profile {
     }
 }
 
-// MARK: - Сервис профиля
 final class ProfileService {
     static let shared = ProfileService()
     
