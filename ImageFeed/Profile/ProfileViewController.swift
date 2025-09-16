@@ -1,4 +1,5 @@
 import UIKit
+import Kingfisher
 
 final class ProfileViewController: UIViewController {
 
@@ -8,6 +9,23 @@ final class ProfileViewController: UIViewController {
     private let descriptionLabel = UILabel()
     private let profilePageView = UIView()
     
+    private var profileImageServiceObserver: NSObjectProtocol?
+    
+    override func viewWillAppear(_ animated: Bool) {
+            super.viewWillAppear(animated)
+        profileImageServiceObserver = NotificationCenter.default
+            .addObserver(
+                forName: ProfileImageService.didChangeNotification,
+                object: nil,
+                queue: .main
+            ) { [weak self] _ in
+                guard let self = self else { return }
+                self.updateAvatar()
+            }
+        updateAvatar()
+            updateProfileDetails()
+        }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         setupProfileView()
@@ -16,6 +34,54 @@ final class ProfileViewController: UIViewController {
         setupHashtagString()
         setupDescriptionString()
         setupLogoutButton()
+        updateProfileDetails()
+    }
+    
+
+    private func updateAvatar() {
+        guard
+            let profileImageURL = ProfileImageService.shared.avatarURL,
+            let imageUrl = URL(string: profileImageURL)
+        else { return }
+
+        print("imageUrl: \(imageUrl)")
+
+        let placeholderImage = UIImage(systemName: "person.circle.fill")?
+            .withTintColor(.lightGray, renderingMode: .alwaysOriginal)
+            .withConfiguration(UIImage.SymbolConfiguration(pointSize: 70, weight: .regular, scale: .large))
+
+        let processor = RoundCornerImageProcessor(cornerRadius: 35) // Радиус для круга
+        imageView.kf.indicatorType = .activity
+        imageView.kf.setImage(
+            with: imageUrl,
+            placeholder: placeholderImage,
+            options: [
+                .processor(processor),
+                .scaleFactor(UIScreen.main.scale), // Учитываем масштаб экрана
+                .cacheOriginalImage, // Кэшируем оригинал
+                .forceRefresh // Игнорируем кэш, чтобы обновить
+            ]) { result in
+
+                switch result {
+                    // Успешная загрузка
+                case .success(let value):
+                    // Картинка
+                    print(value.image)
+
+                    // Откуда картинка загружена:
+                    // - .none — из сети.
+                    // - .memory — из кэша оперативной памяти.
+                    // - .disk — из дискового кэша.
+                    print(value.cacheType)
+
+                    // Информация об источнике.
+                    print(value.source)
+
+                    // В случае ошибки
+                case .failure(let error):
+                    print(error)
+                }
+            }
     }
     
     private func setupProfileView() {
@@ -84,5 +150,16 @@ final class ProfileViewController: UIViewController {
     
     @objc func didTapLogout() {
         print("Выход")
+    }
+    
+    private func updateProfileDetails() {
+        guard let profile = ProfileService.shared.profile else {
+            print("Профиль ещё не загружен")
+            return
+        }
+        
+        nameLabel.text = profile.name
+        hashtagLabel.text = "\(profile.loginName)"
+        descriptionLabel.text = profile.bio ?? ""
     }
 }
