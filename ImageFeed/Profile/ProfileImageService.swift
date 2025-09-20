@@ -9,6 +9,10 @@ final class ProfileImageService {
     
     static let didChangeNotification = Notification.Name("ProfileImageProviderDidChange")
     
+    func resetAvatarURL() {
+        avatarURL = nil
+    }
+    
     func fetchProfileImageURL(username: String, _ completion: @escaping (Result<String, Error>) -> Void) {
         guard let url = URL(string: "https://api.unsplash.com/users/\(username)") else { return }
         guard let token = tokenStorage.token else { return }

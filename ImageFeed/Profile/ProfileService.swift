@@ -77,6 +77,10 @@ final class ProfileService {
     init() {}
     private(set) var profile: Profile?
     
+    func resetProfile() {
+        profile = nil
+    }
+    
     func fetchProfile(token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         guard !isFetching else {
             print("Запрос уже выполняется")
