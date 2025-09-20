@@ -25,7 +25,6 @@ final class SplashViewController: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = UIColor.ypBlack
         setupUI()
-        goToAuthScreen()
     }
 
         private func setupUI() {
@@ -40,7 +39,7 @@ final class SplashViewController: UIViewController {
         }
 
         private func goToAuthScreen() {
-            DispatchQueue.main.asyncAfter(deadline: .now() + 0) { [weak self] in
+            DispatchQueue.main.async { [weak self] in
                 guard let self else { return }
 
                 let storyboard = UIStoryboard(name: "Main", bundle: nil)
