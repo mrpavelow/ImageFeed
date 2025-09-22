@@ -7,12 +7,12 @@ protocol ImagesListCellDelegate: AnyObject {
 
 final class ImagesListCell: UITableViewCell {
     static let reuseIdentifier = "ImagesListCell"
-    weak var delegate: ImagesListCellDelegate? 
+    weak var delegate: ImagesListCellDelegate?
     
     @IBOutlet weak var cellImage: UIImageView!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var likeButton: UIButton!
-    @IBAction func likeButtonDidTap(_ sender: Any) {
+    @IBAction private func likeButtonDidTap(_ sender: Any) {
         delegate?.imageListCellDidTapLike(self)
     }
     
@@ -24,7 +24,6 @@ final class ImagesListCell: UITableViewCell {
     
     override func prepareForReuse() {
         super.prepareForReuse()
-        // Отменяем загрузку изображения при переиспользовании ячейки
         cellImage.kf.cancelDownloadTask()
         cellImage.image = nil
         dateLabel.text = nil
@@ -32,12 +31,12 @@ final class ImagesListCell: UITableViewCell {
     }
     
     func setIsLiked(_ isLiked: Bool) {
-           let imageName = isLiked ? "active_like_button" : "disable_like_button"
-           likeButton.setImage(UIImage(named: imageName), for: .normal)
-       }
+       let imageResource: ImageResource = isLiked ? .activeLikeButton : .disableLikeButton
+       likeButton.setImage(UIImage(resource: imageResource), for: .normal)
+    }
     
     func setLikeButtonEnabled(_ isEnabled: Bool) {
         likeButton.isEnabled = isEnabled
     }
-
+    
 }

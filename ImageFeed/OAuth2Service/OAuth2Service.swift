@@ -32,7 +32,7 @@ final class OAuth2Service {
         completion: @escaping (Result<String, Error>) -> Void
     ) {
         assert(Thread.isMainThread)
-
+        
         if let task = task {
             if lastCode != code {
                 task.cancel()
@@ -47,18 +47,18 @@ final class OAuth2Service {
             }
         }
         lastCode = code
-
+        
         guard let request = makeOAuthTokenRequest(code: code) else {
             completion(.failure(NetworkError.invalidRequest))
             return
         }
-
+        
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<OAuthTokenResponseBody, Error>) in
             defer {
                 self?.task = nil
                 self?.lastCode = nil
             }
-
+            
             switch result {
             case .success(let tokenResponse):
                 let token = tokenResponse.accessToken
@@ -69,7 +69,7 @@ final class OAuth2Service {
                 completion(.failure(error))
             }
         }
-
+        
         self.task = task
         task.resume()
     }

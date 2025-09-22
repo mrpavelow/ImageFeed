@@ -23,7 +23,7 @@ extension URLSession {
                 }
                 return
             }
-
+            
             guard let data = data else {
                 let noDataError = NSError(domain: "NoData", code: -1, userInfo: nil)
                 print("Ошибка: пустой ответ от сервера")
@@ -32,7 +32,7 @@ extension URLSession {
                 }
                 return
             }
-
+            
             do {
                 let decoder = JSONDecoder()
                 let object = try decoder.decode(T.self, from: data)

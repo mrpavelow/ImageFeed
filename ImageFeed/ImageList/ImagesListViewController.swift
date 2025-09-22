@@ -2,23 +2,20 @@ import UIKit
 import Kingfisher
 import ProgressHUD
 
-
-
 final class ImagesListViewController: UIViewController {
     private let showSingleImageSegueIdentifier = "ShowSingleImage"
-
-    @IBOutlet private var tableView: UITableView!
     
+    @IBOutlet private var tableView: UITableView!
     private let imagesListService = ImagesListService()
     private var photos: [Photo] = []
     
-    private lazy var dateFormatter: DateFormatter = {
+    static let dateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .long
         formatter.timeStyle = .none
         return formatter
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -31,9 +28,9 @@ final class ImagesListViewController: UIViewController {
         
         NotificationCenter.default.addObserver(
             self,
-            selector: #selector(didReceivePhotosUpdate),
+            selector: #selector(updateTableViewAnimated),
             name: ImagesListService.didChangeNotification,
-            object: imagesListService
+            object: nil
         )
         
         imagesListService.fetchPhotosNextPage()
@@ -43,13 +40,13 @@ final class ImagesListViewController: UIViewController {
         let oldCount = photos.count
         let newCount = imagesListService.photos.count
         photos = imagesListService.photos
-
+        
         guard newCount > oldCount else { return }
-
+        
         let indexPaths = (oldCount..<newCount).map {
             IndexPath(row: $0, section: 0)
         }
-
+        
         tableView.performBatchUpdates {
             tableView.insertRows(at: indexPaths, with: .automatic)
         }
@@ -73,29 +70,11 @@ final class ImagesListViewController: UIViewController {
             super.prepare(for: segue, sender: sender)
         }
     }
-    
-    @objc private func didReceivePhotosUpdate() {
-        let oldCount = photos.count
-        let newCount = imagesListService.photos.count
-
-        guard newCount > oldCount else { return }
-
-        let newPhotos = Array(imagesListService.photos[oldCount..<newCount])
-        let newIndexPaths = (oldCount..<newCount).map { IndexPath(row: $0, section: 0) }
-
-        photos.append(contentsOf: newPhotos)
-
-        tableView.performBatchUpdates {
-            tableView.insertRows(at: newIndexPaths, with: .automatic)
-        }
-    }
 }
-
-
 
 extension ImagesListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return photos.count
+        photos.count
     }
     
     func tableView(_ tableView: UITableView,
@@ -154,35 +133,33 @@ extension ImagesListViewController {
         }
         
         if let createdAt = photo.createdAt {
-            cell.dateLabel.text = dateFormatter.string(from: createdAt)
+            cell.dateLabel.text = ImagesListViewController.dateFormatter.string(from: createdAt)
         } else {
-            cell.dateLabel.text = "nil date"
+            cell.dateLabel.text = ""
         }
         
-        let likeImage = photo.isLiked
-            ? UIImage(named: "active_like_button")
-            : UIImage(named: "disable_like_button")
-        cell.likeButton.setImage(likeImage, for: .normal)
+
+        let imageResource: ImageResource = photo.isLiked ? .activeLikeButton : .disableLikeButton
+        cell.likeButton.setImage(UIImage(resource: imageResource), for: .normal)
     }
 }
 
 extension ImagesListViewController: ImagesListCellDelegate {
     
     func imageListCellDidTapLike(_ cell: ImagesListCell) {
-    
-      guard let indexPath = tableView.indexPath(for: cell) else { return }
-      let photo = photos[indexPath.row]
-     UIBlockingProgressHUD.show()
-     imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { result in
-        switch result {
-        case .success:
-           self.photos = self.imagesListService.photos
-           cell.setIsLiked(self.photos[indexPath.row].isLiked)
-           UIBlockingProgressHUD.dismiss()
-        case .failure:
-           UIBlockingProgressHUD.dismiss()
-           // TODO: Показать ошибку с использованием UIAlertController
-           }
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        let photo = photos[indexPath.row]
+        UIBlockingProgressHUD.show()
+        imagesListService.changeLike(photoId: photo.id, isLike: !photo.isLiked) { result in
+            switch result {
+            case .success:
+                self.photos = self.imagesListService.photos
+                cell.setIsLiked(self.photos[indexPath.row].isLiked)
+                UIBlockingProgressHUD.dismiss()
+            case .failure:
+                UIBlockingProgressHUD.dismiss()
+                // TODO: Показать ошибку с использованием UIAlertController
+            }
         }
     }
     

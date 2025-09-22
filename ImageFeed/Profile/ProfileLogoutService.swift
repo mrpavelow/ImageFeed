@@ -27,9 +27,9 @@ final class ProfileLogoutService {
     private func switchToLoginScreen() {
         DispatchQueue.main.async {
             guard let window = UIApplication.shared.connectedScenes
-                    .compactMap({ $0 as? UIWindowScene })
-                    .first?.windows
-                    .first else { return }
+                .compactMap({ $0 as? UIWindowScene })
+                .first?.windows
+                .first else { return }
             
             let storyboard = UIStoryboard(name: "Main", bundle: nil)
             let loginVC = storyboard.instantiateViewController(withIdentifier: "AuthViewController")
