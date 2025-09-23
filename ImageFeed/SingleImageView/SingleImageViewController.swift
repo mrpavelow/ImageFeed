@@ -1,5 +1,6 @@
 import UIKit
 import Kingfisher
+import ProgressHUD
 
 final class SingleImageViewController: UIViewController {
     var image: UIImage? {
@@ -46,44 +47,60 @@ private extension SingleImageViewController {
     }
     
     func loadImage(from url: URL) {
-        imageView.kf.indicatorType = .activity
+        UIBlockingProgressHUD.show()
         imageView.kf.setImage(
             with: url,
-            placeholder: UIImage(named: "placeholder"),
             options: [.transition(.fade(0.25))]
         ) { [weak self] result in
             switch result {
             case .success(let value):
                 self?.updateImage(value.image)
+                UIBlockingProgressHUD.dismiss()
             case .failure(let error):
                 print("Ошибка загрузки изображения: \(error)")
+                UIBlockingProgressHUD.dismiss()
             }
         }
     }
     
-    func rescaleAndCenterImageInScrollView(image: UIImage) {
+    private func rescaleAndCenterImageInScrollView(image: UIImage) {
         let minZoomScale = scrollView.minimumZoomScale
         let maxZoomScale = scrollView.maximumZoomScale
         view.layoutIfNeeded()
-        
         let visibleRectSize = scrollView.bounds.size
         let imageSize = image.size
-        let hScale = imageSize.width != 0 ? visibleRectSize.width / imageSize.width : 1.0
-        let vScale = imageSize.height != 0 ? visibleRectSize.height / imageSize.height : 1.0
+        let hScale = visibleRectSize.width / imageSize.width
+        let vScale = visibleRectSize.height / imageSize.height
         let scale = min(maxZoomScale, max(minZoomScale, min(hScale, vScale)))
-        
         scrollView.setZoomScale(scale, animated: false)
         scrollView.layoutIfNeeded()
-        
         let newContentSize = scrollView.contentSize
         let x = (newContentSize.width - visibleRectSize.width) / 2
         let y = (newContentSize.height - visibleRectSize.height) / 2
         scrollView.setContentOffset(CGPoint(x: x, y: y), animated: false)
     }
+    
+    private func centerImage() {
+        guard let imageView = scrollView.subviews.first as? UIImageView else { return }
+
+        let scrollViewSize = scrollView.bounds.size
+        let imageViewSize = imageView.frame.size
+
+        let verticalInset = max(0, (scrollViewSize.height - imageViewSize.height) / 2)
+        let horizontalInset = max(0, (scrollViewSize.width - imageViewSize.width) / 2)
+
+        scrollView.contentInset = UIEdgeInsets(
+            top: verticalInset,
+            left: horizontalInset,
+            bottom: verticalInset,
+            right: horizontalInset
+        )
+    }
 }
 
 extension SingleImageViewController: UIScrollViewDelegate {
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
+        centerImage()
         return imageView
     }
 }

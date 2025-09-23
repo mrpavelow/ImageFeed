@@ -126,10 +126,7 @@ extension ImagesListViewController {
                 with: url,
                 placeholder: UIImage(named: "placeholder"),
                 options: [.transition(.fade(0.2))]
-            ) { [weak self] _ in
-                guard let tableView = self?.tableView else { return }
-                tableView.reloadRows(at: [indexPath], with: .automatic)
-            }
+            )
         }
         
         if let createdAt = photo.createdAt {
@@ -138,7 +135,6 @@ extension ImagesListViewController {
             cell.dateLabel.text = ""
         }
         
-
         let imageResource: ImageResource = photo.isLiked ? .activeLikeButton : .disableLikeButton
         cell.likeButton.setImage(UIImage(resource: imageResource), for: .normal)
     }

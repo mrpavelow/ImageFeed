@@ -115,7 +115,7 @@ final class ImagesListService {
         let url = baseURL.appendingPathComponent("photos/\(photoId)/like")
         
         var request = URLRequest(url: url)
-        request.httpMethod = isLike ? httpMethods.post.value : httpMethods.del.value
+        request.httpMethod = isLike ? httpMethods.post.rawValue : httpMethods.del.value
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         let task = URLSession.shared.objectTask(for: request) { (result: Result<LikeResponse, Error>) in
