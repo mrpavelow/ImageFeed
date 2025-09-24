@@ -77,27 +77,31 @@ final class ProfileService {
     init() {}
     private(set) var profile: Profile?
     
+    func resetProfile() {
+        profile = nil
+    }
+    
     func fetchProfile(token: String, completion: @escaping (Result<Profile, Error>) -> Void) {
         guard !isFetching else {
             print("Запрос уже выполняется")
             return
         }
-
+        
         guard let url = URL(string: "https://api.unsplash.com/me") else { return }
         guard let token = tokenStorage.token else {
             print("Токен не найден")
             return
         }
-
+        
         var request = URLRequest(url: url)
         request.httpMethod = "GET"
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
-
+        
         isFetching = true
-
+        
         let task = URLSession.shared.objectTask(for: request) { [weak self] (result: Result<ProfileResult, Error>) in
             defer { self?.isFetching = false }
-
+            
             switch result {
             case .success(let profileResult):
                 let profile = Profile(from: profileResult)
@@ -108,7 +112,7 @@ final class ProfileService {
                 completion(.failure(error))
             }
         }
-
+        
         task.resume()
     }
 }

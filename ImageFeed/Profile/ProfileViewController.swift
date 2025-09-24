@@ -2,7 +2,7 @@ import UIKit
 import Kingfisher
 
 final class ProfileViewController: UIViewController {
-
+    
     private let imageView = UIImageView()
     private let nameLabel = UILabel()
     private let hashtagLabel = UILabel()
@@ -12,7 +12,7 @@ final class ProfileViewController: UIViewController {
     private var profileImageServiceObserver: NSObjectProtocol?
     
     override func viewWillAppear(_ animated: Bool) {
-            super.viewWillAppear(animated)
+        super.viewWillAppear(animated)
         profileImageServiceObserver = NotificationCenter.default
             .addObserver(
                 forName: ProfileImageService.didChangeNotification,
@@ -23,9 +23,9 @@ final class ProfileViewController: UIViewController {
                 self.updateAvatar()
             }
         updateAvatar()
-            updateProfileDetails()
-        }
-
+        updateProfileDetails()
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         setupProfileView()
@@ -37,19 +37,18 @@ final class ProfileViewController: UIViewController {
         updateProfileDetails()
     }
     
-
     private func updateAvatar() {
         guard
             let profileImageURL = ProfileImageService.shared.avatarURL,
             let imageUrl = URL(string: profileImageURL)
         else { return }
-
+        
         print("imageUrl: \(imageUrl)")
-
+        
         let placeholderImage = UIImage(systemName: "person.circle.fill")?
             .withTintColor(.lightGray, renderingMode: .alwaysOriginal)
             .withConfiguration(UIImage.SymbolConfiguration(pointSize: 70, weight: .regular, scale: .large))
-
+        
         let processor = RoundCornerImageProcessor(cornerRadius: 35) // Радиус для круга
         imageView.kf.indicatorType = .activity
         imageView.kf.setImage(
@@ -61,22 +60,22 @@ final class ProfileViewController: UIViewController {
                 .cacheOriginalImage, // Кэшируем оригинал
                 .forceRefresh // Игнорируем кэш, чтобы обновить
             ]) { result in
-
+                
                 switch result {
                     // Успешная загрузка
                 case .success(let value):
                     // Картинка
                     print(value.image)
-
+                    
                     // Откуда картинка загружена:
                     // - .none — из сети.
                     // - .memory — из кэша оперативной памяти.
                     // - .disk — из дискового кэша.
                     print(value.cacheType)
-
+                    
                     // Информация об источнике.
                     print(value.source)
-
+                    
                     // В случае ошибки
                 case .failure(let error):
                     print(error)
@@ -149,7 +148,22 @@ final class ProfileViewController: UIViewController {
     }
     
     @objc func didTapLogout() {
-        print("Выход")
+        let alert = UIAlertController(
+            title: "Пока, пока!",
+            message: "Уверены хотите выйти?",
+            preferredStyle: .alert
+        )
+        
+        let cancelAction = UIAlertAction(title: "Нет", style: .cancel)
+        
+        let logoutAction = UIAlertAction(title: "Да", style: .destructive) { _ in
+            ProfileLogoutService.shared.logout()
+        }
+        
+        alert.addAction(cancelAction)
+        alert.addAction(logoutAction)
+        
+        present(alert, animated: true)
     }
     
     private func updateProfileDetails() {
