@@ -44,7 +44,8 @@ final class SplashViewController: UIViewController {
             guard let authVC = storyboard.instantiateViewController(
                 withIdentifier: "AuthViewController"
             ) as? AuthViewController else {
-                fatalError("AuthViewController not found in storyboard")
+                assertionFailure("AuthViewController not found in storyboard")
+                return 
             }
             
             authVC.delegate = self
